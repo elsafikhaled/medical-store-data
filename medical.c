@@ -19,6 +19,7 @@ void gotoxy(int x,int y)
 void Box_up();
 void bigBox();
 void mainMenu();
+void getAllData(char d[],int code);
 
 /* ##########################             SUPPLIERS   DATA            ####################################*/
 
@@ -31,9 +32,9 @@ int  getSupplier_ID();
 struct supplier
 {
 	int  supplier_ID;
-	char supplier_name[50];
-	char supplier_mobile[20];
-	char supplier_E_mail[50];
+	char supplier_name[30];
+	char supplier_mobile[11];
+	char supplier_E_mail[30];
 	char supplier_city[20];
 }supp_data;
 
@@ -67,7 +68,7 @@ void mainMenu()
 	gotoxy(4,29);
 	printf("Enter the first letter of the option: ");
 	/*scanf("%c",&ch);*/
-	ch=toupper(getche());
+	ch=toupper(getch());
 	switch(ch)
 	{
 	  case 'S':
@@ -114,7 +115,7 @@ void bigBox()
 {
 	char column,row;
 	gotoxy(2,9);
-	printf("%c",220);
+       	printf("%c",220);
 	for(column=3;column<=75;column++)
 	{
 		gotoxy(column,9);
@@ -147,7 +148,7 @@ void supplierInfo()
 	bigBox();
 	gotoxy(26,4);
 	printf("  *** CAIRO PHARMACY *** ");
-    gotoxy(5,14);
+        gotoxy(5,14);
 	printf("* Add new supplier ");
 	gotoxy(5,18);
 	printf("* Update supplier info");
@@ -182,28 +183,42 @@ void addSupplier()
 	while(ch=='y')
 	{
 		Box_up();
-	  bigBox();
-	  gotoxy(26,4);
-	  printf("  *** CAIRO PHARMACY *** ");
-	  gotoxy(28,12);
-	  printf("%c %c",175,175);
-	  printf("  Add supplier  ");
-	  gotoxy(46,12);
-	  printf("%c %c",174,174);
+	        bigBox();
+	        gotoxy(26,4);
+	        printf("  *** CAIRO PHARMACY *** ");
+	        gotoxy(28,12);
+	        printf("%c %c",175,175);
+	        printf("  Add supplier  ");
+	        gotoxy(46,12);
+	        printf("%c %c",174,174);
 		supp_data.supplier_ID=getSupplier_ID();
 		gotoxy(4,14);
 		printf("* Supplier    ID :%d",supp_data.supplier_ID);
 		gotoxy(4,17);
 		printf("* supplier   Name: ");
 		gotoxy(4,20);
-		printf("* supplier E-mail: ");
+		printf("* supplier Mobile: ");
 		gotoxy(4,23);
+		printf("* supplier E-mail: ");
+		gotoxy(4,26);
 		printf("* supplier   City: ");
-		
-		getch();
+		gotoxy(22,17);
+		getAllData(supp_data.supplier_name,0);
+		gotoxy(23,20);
+		getAllData(supp_data.supplier_mobile,1);
+		gotoxy(23,23);
+		getAllData(supp_data.supplier_E_mail,0);
+		gotoxy(23,26);
+		getAllData(supp_data.supplier_name,0);
+		gotoxy(7,28);
+	        printf("[ Save / Cancel ] ::");
+		gotoxy(26,28);
+		printf("   please Enter the first character: ");
+		ch=(getch());
+	
 	}
 	
-	gotoxy(15,40);
+	
 }
 
 int  getSupplier_ID()
@@ -226,7 +241,44 @@ int  getSupplier_ID()
 
 }
 
+void getAllData(char d[],int code)
+{
+	int i=0;
+	if(code==0)
+	{
+		while((d[i]=getch())!='\r' && i<30)
+				
+		{   if((d[i]>=97 && d[i]<=122) || (d[i]>=65 && d[i]<=90) || d[i]==32 || d[i]=='_' || d[i]==64 || d[i]==46)
+			{
+				printf("%c",d[i]);
+				i++;
+			}
+			else if(d[i]==8 && i>0)
+		        {
+			    printf("%c%c%c",8,32,8);
+			    i--;             
 
+		         }
+		}
+	}
+	if(code==1)
+	{
+		while((d[i]=getch())!='\r' && i<12)
+				
+		{   if((d[i]>=48 && d[i]<=57) || (d[i]='-') || (d[i]==46) )
+			{
+				printf("%c",d[i]);
+				i++;
+			}
+			else if(d[i]==8 && i>0)
+		        {
+			    printf("%c%c%c",8,32,8);
+			    i--;             
+
+		        }
+		}
+	}
+}
 
 
 
